@@ -58,6 +58,9 @@ pushd %{buildroot}/bin
 ln -sf ../usr/bin/find
 popd
 
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
+
 %clean
 rm -rf %{buildroot}
 
@@ -65,6 +68,7 @@ rm -rf %{buildroot}
 %manifest findutils.manifest
 %defattr(-,root,root)
 %doc AUTHORS COPYING NEWS README THANKS TODO
+/usr/share/license/%{name}
 %{_bindir}/find
 /bin/find
 %{_bindir}/xargs
