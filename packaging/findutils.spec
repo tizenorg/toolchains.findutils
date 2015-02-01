@@ -13,6 +13,7 @@ Source0: ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
 Patch1: findutils-4.2.31-no-locate.patch
 Patch2: findutils-bmc12931-find-ls-stack-overflow.patch
 
+
 BuildRequires: libtool, automake, autoconf, gzip
 %if %{run_tests}
 BuildRequires: dejagnu
