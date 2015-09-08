@@ -9,7 +9,6 @@ Epoch: 1
 Group: Applications/File
 URL: http://www.gnu.org/software/findutils/
 Source0: ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz
-Source1001: packaging/findutils.manifest 
 #Source1: ftp://ftp.gnu.org/gnu/findutils/%{name}-%{version}.tar.gz.sig
 Patch1: findutils-4.2.31-no-locate.patch
 Patch2: findutils-bmc12931-find-ls-stack-overflow.patch
@@ -37,7 +36,6 @@ useful for finding things on your system.
 %patch2 -p1
 
 %build
-cp %{SOURCE1001} .
 export CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE"
 export CXXFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE"
 %configure --without-selinux --disable-nls
@@ -50,6 +48,9 @@ make check
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/license
+cp COPYING %{buildroot}/usr/share/license/%{name}
+
 %make_install
 rm -rf %{buildroot}/%{_infodir}
 
@@ -61,7 +62,7 @@ popd
 %clean
 rm -rf %{buildroot}
 
-%files 
+%files
 %manifest findutils.manifest
 %defattr(-,root,root)
 %doc AUTHORS COPYING NEWS README THANKS TODO
@@ -70,4 +71,4 @@ rm -rf %{buildroot}
 %{_bindir}/xargs
 %{_mandir}/man1/find.1*
 %{_mandir}/man1/xargs.1*
-
+/usr/share/license/%{name}
