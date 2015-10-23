@@ -4,7 +4,7 @@ Summary: The GNU versions of find utilities (find and xargs)
 Name: findutils
 Version: 4.2.31
 Release: 1
-License: GPLv2+
+License: GPL-2.0+ and LGPL-2.1+
 Epoch: 1
 Group: Applications/File
 URL: http://www.gnu.org/software/findutils/
@@ -48,9 +48,6 @@ make check
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/license
-cp COPYING %{buildroot}/usr/share/license/%{name}
-
 %make_install
 rm -rf %{buildroot}/%{_infodir}
 
@@ -59,16 +56,22 @@ pushd %{buildroot}/bin
 ln -sf ../usr/bin/find
 popd
 
+# LICENSE
+mkdir -p %{buildroot}/usr/share/license
+cp -af COPYING %{buildroot}/usr/share/license/%{name}
+cat COPYING.LGPL_2.1 >> %{buildroot}/usr/share/license/%{name}
+
 %clean
 rm -rf %{buildroot}
 
 %files
 %manifest findutils.manifest
 %defattr(-,root,root)
-%doc AUTHORS COPYING NEWS README THANKS TODO
+%doc AUTHORS NEWS README THANKS TODO
 %{_bindir}/find
 /bin/find
 %{_bindir}/xargs
 %{_mandir}/man1/find.1*
 %{_mandir}/man1/xargs.1*
-/usr/share/license/%{name}
+%{_datadir}/license/%{name}
+
